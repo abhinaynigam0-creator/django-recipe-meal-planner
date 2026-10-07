@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="top"><h2 style="margin:0">🛒 Shopping list</h2>
+<span><a class="btn gray" href="?week={{ prev }}">← Prev</a> <a class="btn gray" href="{% url 'shopping_list' %}">This week</a> <a class="btn gray" href="?week={{ next }}">Next →</a></span></div>
+<p class="meta">{{ start|date:"j M" }} – {{ end|date:"j M Y" }} · built from {{ meal_count }} planned meal{{ meal_count|pluralize }} (quantities scaled to planned servings)</p>
+<div class="card">
+{% for i in items %}
+ <label style="display:block;padding:6px 0;border-bottom:1px solid #eee"><input type="checkbox" style="width:auto"> <strong>{{ i.qty|floatformat:"-2" }} {{ i.unit }}</strong> {{ i.name }}</label>
+{% empty %}<p>Nothing planned this week. <a href="{% url 'planner' %}?week={{ start }}">Plan some meals</a>.</p>{% endfor %}
+</div>
+<button class="btn gray" onclick="window.print()">🖨️ Print</button>
+{% endblock %}

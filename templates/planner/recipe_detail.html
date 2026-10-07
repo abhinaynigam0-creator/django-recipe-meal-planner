@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="top"><h2 style="margin:0">{{ recipe.title }}</h2>
+<span><a class="btn gray" href="{% url 'recipe_update' recipe.pk %}">Edit</a> <a class="btn red" href="{% url 'recipe_delete' recipe.pk %}">Delete</a></span></div>
+<p class="meta">{{ recipe.description }}<br>Prep {{ recipe.prep_minutes }} min · Cook {{ recipe.cook_minutes }} min · Serves {{ recipe.servings }}</p>
+<div class="card"><h3 style="margin-top:0">Ingredients</h3><ul>
+{% for i in recipe.ingredients.all %}<li>{{ i.quantity|floatformat:"-2" }} {{ i.unit }} {{ i.name }}</li>{% empty %}<li>No ingredients added.</li>{% endfor %}</ul></div>
+<div class="card"><h3 style="margin-top:0">Method</h3><p style="white-space:pre-line">{{ recipe.instructions }}</p></div>
+<a class="btn green" href="{% url 'meal_add' %}">Add to meal plan</a> <a class="btn gray" href="{% url 'recipe_list' %}">Back</a>
+{% endblock %}

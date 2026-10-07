@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="box"><h2>{{ title }}</h2>
+<form method="post">{% csrf_token %}{{ form.as_p }}
+<h3>Ingredients</h3>{{ formset.management_form }}{{ formset.non_form_errors }}
+<table class="ing" style="box-shadow:none"><tr><th>Name</th><th>Qty</th><th>Unit</th><th>Del</th></tr>
+{% for f in formset %}<tr>{{ f.id }}<td>{{ f.name }}{{ f.name.errors }}</td><td>{{ f.quantity }}{{ f.quantity.errors }}</td><td>{{ f.unit }}</td>
+<td>{% if f.instance.pk %}{{ f.DELETE }}{% endif %}</td></tr>{% endfor %}</table><br>
+<button class="btn">Save recipe</button> <a class="btn gray" href="{% url 'recipe_list' %}">Cancel</a></form></div>
+{% endblock %}

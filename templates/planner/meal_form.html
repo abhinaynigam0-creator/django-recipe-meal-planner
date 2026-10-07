@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="box"><h2>Plan a meal</h2>
+{% if not form.fields.recipe.queryset %}<p>You have no recipes yet. <a href="{% url 'recipe_create' %}">Add one first.</a></p>{% endif %}
+<form method="post">{% csrf_token %}{{ form.as_p }}<button class="btn">Add to plan</button> <a class="btn gray" href="{% url 'planner' %}">Cancel</a></form></div>
+{% endblock %}

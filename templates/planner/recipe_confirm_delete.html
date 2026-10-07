@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="box"><h2>Delete "{{ recipe.title }}"?</h2><p>It will also be removed from your meal plan.</p>
+<form method="post">{% csrf_token %}<button class="btn red">Yes, delete</button> <a class="btn gray" href="{% url 'recipe_detail' recipe.pk %}">Cancel</a></form></div>
+{% endblock %}

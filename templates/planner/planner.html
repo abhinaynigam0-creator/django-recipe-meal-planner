@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="top"><h2 style="margin:0">Week of {{ start|date:"j M" }} – {{ end|date:"j M Y" }}</h2>
+<span><a class="btn gray" href="?week={{ prev }}">← Prev</a> <a class="btn gray" href="{% url 'planner' %}">This week</a> <a class="btn gray" href="?week={{ next }}">Next →</a>
+ <a class="btn green" href="{% url 'shopping_list' %}?week={{ start }}">🛒 Shopping list</a></span></div>
+<br><div class="scroll"><table>
+<tr><th>Day</th><th>Breakfast</th><th>Lunch</th><th>Dinner</th><th>Snack</th></tr>
+{% for row in rows %}
+<tr {% if row.date == today %}class="today"{% endif %}>
+ <td><strong>{{ row.date|date:"D" }}</strong><br>{{ row.date|date:"j M" }}</td>
+ {% for key, label, meals in row.slots %}
+ <td>
+  {% for m in meals %}
+  <div class="meal"><span><a href="{% url 'recipe_detail' m.recipe.pk %}" style="color:inherit">{{ m.recipe.title }}</a> <small>×{{ m.servings }}</small></span>
+   <form method="post" action="{% url 'meal_delete' m.pk %}">{% csrf_token %}<button title="Remove">✕</button></form></div>
+  {% endfor %}
+  <a class="add" href="{% url 'meal_add' %}?date={{ row.date|date:'Y-m-d' }}&meal_type={{ key }}">+ add</a>
+ </td>
+ {% endfor %}
+</tr>
+{% endfor %}
+</table></div>
+{% endblock %}

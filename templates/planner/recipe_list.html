@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="top"><h2 style="margin:0">My recipes</h2><a class="btn green" href="{% url 'recipe_create' %}">+ New recipe</a></div><br>
+<form method="get" style="display:flex;gap:8px;margin-bottom:14px"><input name="q" value="{{ q }}" placeholder="Search by recipe or ingredient..."><button class="btn">Search</button></form>
+<div class="grid">
+{% for r in recipes %}
+<a href="{% url 'recipe_detail' r.pk %}" style="text-decoration:none;color:inherit"><div class="card">
+ <strong>{{ r.title }}</strong><br><span class="meta">{{ r.description }}</span><br>
+ <span class="meta">⏱ {{ r.total_minutes }} min · 👤 {{ r.servings }} serving{{ r.servings|pluralize }}</span></div></a>
+{% empty %}<p>No recipes found.</p>{% endfor %}
+</div>
+{% endblock %}
